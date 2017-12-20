@@ -1,0 +1,48 @@
+{
+  "bitwise": true,
+  "browser": true,
+  "curly": true,
+  "eqeqeq": true,
+  "esnext": true,
+  "latedef": "nofunc",
+  "noarg": true,
+  "node": true,
+  "strict": false,
+  "undef": true,
+  "unused": "vars",
+  "globals": {
+    // Angular
+    "angular": false,
+
+    // Angular mocks
+    "module": false,
+    "inject": false,
+
+    // Jasmine
+    "jasmine": false,
+    "describe": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "it": false,
+    "expect": false,
+
+    // Protractor
+    "browser": false,
+    "element": false,
+    "by": false,
+
+    // Tween
+    "Linear": false,
+    "TweenMax": false,
+    "TimelineMax": false,
+    "SteppedEase": false,
+    "Sine": false,
+    "Power1": false,
+
+    // PIXI
+    "PIXI": false,
+    "scaleToWindow": false
+
+  },
+  "jasmine": true
+}

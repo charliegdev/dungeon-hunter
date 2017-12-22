@@ -1,4 +1,3 @@
-window.dungeonHunter = {};
 // Setup APIs
 const Container = PIXI.Container;
 const Sprite = PIXI.Sprite;
@@ -6,7 +5,8 @@ const Point = PIXI.Point;
 let renderer, stage;
 let dungeon, explorer, treasure, door;
 
-window.dungeonHunter.init = function() {
+function init() {
+    "use strict";
     renderer = PIXI.autoDetectRenderer(1024, 768);
     document.body.appendChild(renderer.view);
 
@@ -17,11 +17,10 @@ window.dungeonHunter.init = function() {
     window.addEventListener("resize", event => {
         scaleToWindow(renderer.view);
     });
-    window.dungeonHunter.renderer = renderer;
-    window.dungeonHunter.stage = stage;
-};
+}
 
-window.dungeonHunter.loadCharacters = function() {
+function loadCharacters() {
+    "use strict";
     PIXI.loader.add("assets/treasureHunter.json")
         .on("progress", logProgress)
         .load(setup);
@@ -56,16 +55,26 @@ window.dungeonHunter.loadCharacters = function() {
             blob.position = new Point(spacing * i + xOffset, getRandomInt(0, stage.height - blob.height));
             stage.addChild(blob);
         }
-        renderer.render(stage);
 
-        window.dungeonHunter.characters = {
-            explorer
-        };
-
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-        }
+        explorer.vx = 1;
+        explorer.vy = 1;
+        gameLoop();
     }
-};
+}
+init();
+loadCharacters();
+
+function gameLoop() {
+    "use strict";
+    requestAnimationFrame(gameLoop);
+    explorer.x += explorer.vx;
+    explorer.y += explorer.vy;
+    renderer.render(stage);
+}
+
+function getRandomInt(min, max) {
+    "use strict";
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}

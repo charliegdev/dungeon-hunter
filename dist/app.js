@@ -109,50 +109,34 @@ function setupKeyboard() {
         down = keyboard(40);
 
     left.press = function () {
-        if (!right.isDown) {
-            explorer.vx = explorerSpeed * -1;
-        } else {
-            explorer.vx = 0;
-        }
+        explorer.vx -= explorerSpeed;
     };
 
     left.release = function () {
-        if (!right.isDown) {
-            explorer.vx = 0;
-        }
+        explorer.vx += explorerSpeed;
     };
 
     right.press = function () {
-        if (!left.down) {
-            explorer.vx = explorerSpeed;
-        } else {
-            explorer.vx = 0;
-        }
+        explorer.vx += explorerSpeed;
     };
 
     right.release = function () {
-        if (!left.isDown) {
-            explorer.vx = 0;
-        }
+        explorer.vx -= explorerSpeed;
     };
 
     up.press = function () {
-        explorer.vy = explorerSpeed * -1;
+        explorer.vy -= explorerSpeed;
     };
 
     up.release = function () {
-        if (!down.isDown) {
-            explorer.vy = 0;
-        }
+        explorer.vy += explorerSpeed;
     };
 
     down.press = function () {
-        explorer.vy = explorerSpeed;
+        explorer.vy += explorerSpeed;
     };
 
     down.release = function () {
-        if (!up.isDown) {
-            explorer.vy = 0;
-        }
+        explorer.vy -= explorerSpeed;
     };
 }

@@ -1,7 +1,9 @@
+/* global keyboard */
 // Setup APIs
 const Container = PIXI.Container;
 const Sprite = PIXI.Sprite;
 const Point = PIXI.Point;
+const explorerSpeed = 2;
 let renderer, stage;
 let dungeon, explorer, treasure, door;
 
@@ -31,12 +33,14 @@ function loadCharacters() {
     }
 
     function setup(loader, resources) {
+        // Add sprites from textures
         const spritesheet = resources["assets/treasureHunter.json"].textures;
         dungeon = new Sprite(spritesheet["dungeon.png"]);
         explorer = new Sprite(spritesheet["explorer.png"]);
         treasure = new Sprite(spritesheet["treasure.png"]);
         door = new Sprite(spritesheet["door.png"]);
 
+        // Add sprites to stage
         const numberOfBlobs = 6,
             spacing = 48,
             xOffset = 150;
@@ -56,8 +60,11 @@ function loadCharacters() {
             stage.addChild(blob);
         }
 
-        explorer.vx = 1;
-        explorer.vy = 1;
+        setupKeyboard();
+
+        explorer.vx = 0;
+        explorer.vy = 0;
+
         let state = play;
         gameLoop();
 
@@ -82,4 +89,61 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function setupKeyboard() {
+    "use strict";
+    // Add keyboard control
+    const left = keyboard(37),
+        up = keyboard(38),
+        right = keyboard(39),
+        down = keyboard(40);
+
+    left.press = function() {
+        if (!right.isDown) {
+            explorer.vx = explorerSpeed * (-1);
+        } else {
+            explorer.vx = 0;
+        }
+    };
+
+    left.release = function() {
+        if (!right.isDown) {
+            explorer.vx = 0;
+        }
+    };
+
+    right.press = function() {
+        if (!left.down) {
+            explorer.vx = explorerSpeed;
+        } else {
+            explorer.vx = 0;
+        }
+    };
+
+    right.release = function() {
+        if (!left.isDown) {
+            explorer.vx = 0;
+        }
+    };
+
+    up.press = function() {
+        explorer.vy = explorerSpeed * (-1);
+    };
+
+    up.release = function() {
+        if (!down.isDown) {
+            explorer.vy = 0;
+        }
+    };
+
+    down.press = function() {
+        explorer.vy = explorerSpeed;
+    };
+
+    down.release = function() {
+        if (!up.isDown) {
+            explorer.vy = 0;
+        }
+    };
 }

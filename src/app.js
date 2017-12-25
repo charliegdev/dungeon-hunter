@@ -1,4 +1,5 @@
-/* global keyboard */
+/* global contain, setupKeyboard */
+/* exported explorerSpeed */
 // Setup APIs
 const Container = PIXI.Container;
 const Sprite = PIXI.Sprite;
@@ -80,6 +81,23 @@ loadCharacters();
 
 function play() {
     "use strict";
+
+    let collision = contain(explorer, {
+        x: 0,
+        y: 0,
+        width: renderer.view.width,
+        height: renderer.view.height
+    });
+    if (collision) {
+        if (collision.has("left") || collision.has("right")) {
+            explorer.vx = 0;
+        }
+        if (collision.has("up") || collision.has("down")) {
+            explorer.vy = 0;
+        }
+        return;
+    }
+
     explorer.x += explorer.vx;
     explorer.y += explorer.vy;
 }
@@ -89,45 +107,4 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
-
-function setupKeyboard() {
-    "use strict";
-    // Add keyboard control
-    const left = keyboard(37),
-        up = keyboard(38),
-        right = keyboard(39),
-        down = keyboard(40);
-
-    left.press = function() {
-        explorer.vx -= explorerSpeed;
-    };
-
-    left.release = function() {
-        explorer.vx += explorerSpeed;
-    };
-
-    right.press = function() {
-        explorer.vx += explorerSpeed;
-    };
-
-    right.release = function() {
-        explorer.vx -= explorerSpeed;
-    };
-
-    up.press = function() {
-        explorer.vy -= explorerSpeed;
-    };
-
-    up.release = function() {
-        explorer.vy += explorerSpeed;
-    };
-
-    down.press = function() {
-        explorer.vy += explorerSpeed;
-    };
-
-    down.release = function() {
-        explorer.vy -= explorerSpeed;
-    };
 }

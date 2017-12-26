@@ -1,4 +1,4 @@
-/* global setup */
+/* global setup, Container */
 let renderer, stage;
 function init() {
     "use strict";

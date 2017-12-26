@@ -86,10 +86,19 @@ function getRandomInt(min, max) {
 function drawGraphics() {
     "use strict";
 
-    var shape = new Graphics();
-    shape.beginFill(0x00FF00);
-    shape.lineStyle(3, 0x0000FF, 0.8);
-    shape.drawCircle(100, 100, 25);
-    shape.endFill();
-    stage.addChild(shape);
+    var context = new Graphics();
+    context.beginFill(0x00FF00);
+    context.lineStyle(5, 0x0000FF, 1);
+    context.drawCircle(0, 0, 100);
+    context.endFill();
+
+    context.drawRect(100, 100, 30, 30);
+
+    var circleTexture = context.generateTexture();
+    var circleSprite = new Sprite(circleTexture);
+
+    circleSprite.anchor = new Point(0.5, 0.5);
+    circleSprite.x = renderer.width / 2;
+    circleSprite.y = renderer.height / 2;
+    stage.addChild(circleSprite);
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-/* global setup */
+/* global setup, Container */
 var renderer = void 0,
     stage = void 0;
 function init() {

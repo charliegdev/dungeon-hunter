@@ -1,6 +1,6 @@
-/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics */
+/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics, PIXIText */
 /* exported setup */
-let dungeon, explorer, treasure, door, line;
+let dungeon, explorer, treasure, door, line, title;
 function setup(loader, resources) {
     "use strict";
     // Add sprites from textures
@@ -36,6 +36,7 @@ function setup(loader, resources) {
     explorer.vy = 0;
 
     drawGraphics();
+    displayTitle();
 
     let state = play;
     gameLoop();
@@ -94,6 +95,19 @@ function drawGraphics() {
 
     line.angleA = 0;
     line.angleB = 0;
+}
+
+function displayTitle() {
+    "use strict";
+    title = new PIXIText("Dungeon Hunter", {
+        font: "48px Impact",
+        fill: "red"
+    });
+
+    title.x = renderer.view.width / 2 - title.width / 2;
+    title.y = renderer.view.height / 2 - title.height / 2;
+    
+    stage.addChild(title);
 }
 
 function rotateAroundPoint(pointX, pointY, distanceX, distanceY, angle) {

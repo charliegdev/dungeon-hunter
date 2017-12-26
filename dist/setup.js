@@ -5,7 +5,8 @@
 var dungeon = void 0,
     explorer = void 0,
     treasure = void 0,
-    door = void 0;
+    door = void 0,
+    line = void 0;
 function setup(loader, resources) {
     "use strict";
     // Add sprites from textures
@@ -55,6 +56,18 @@ function setup(loader, resources) {
 function play() {
     "use strict";
 
+    line.angleA += 0.02;
+    var rotatingA = rotateAroundPoint(64, 64, 20, 20, line.angleA);
+
+    line.angleB -= 0.03;
+    var rotatingB = rotateAroundPoint(192, 208, 20, 20, line.angleB);
+
+    line.clear();
+
+    line.lineStyle(4, 0x000000, 1);
+    line.moveTo(rotatingA.x, rotatingA.y);
+    line.lineTo(rotatingB.x, rotatingB.y);
+
     var collision = contain(explorer, {
         x: 0,
         y: 0,
@@ -86,19 +99,16 @@ function getRandomInt(min, max) {
 function drawGraphics() {
     "use strict";
 
-    var context = new Graphics();
-    context.beginFill(0x00FF00);
-    context.lineStyle(5, 0x0000FF, 1);
-    context.drawCircle(0, 0, 100);
-    context.endFill();
+    line = new Graphics();
+    stage.addChild(line);
 
-    context.drawRect(100, 100, 30, 30);
+    line.angleA = 0;
+    line.angleB = 0;
+}
 
-    var circleTexture = context.generateTexture();
-    var circleSprite = new Sprite(circleTexture);
+function rotateAroundPoint(pointX, pointY, distanceX, distanceY, angle) {
+    "use strict";
 
-    circleSprite.anchor = new Point(0.5, 0.5);
-    circleSprite.x = renderer.width / 2;
-    circleSprite.y = renderer.height / 2;
-    stage.addChild(circleSprite);
+    var debugPoint = new Point(pointX + Math.cos(angle) * distanceX, pointY + Math.sin(angle) * distanceY);
+    return debugPoint;
 }

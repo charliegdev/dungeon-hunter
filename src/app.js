@@ -14,9 +14,10 @@ function init() {
     });
 }
 
-function loadCharacters() {
+function loadAssets() {
     "use strict";
-    PIXI.loader.add("assets/treasureHunter.json")
+    PIXI.loader.add("assets/spritesheets/treasureHunter.json")
+        .add("assets/fonts/vcr-osd-mono.fnt")
         .on("progress", logProgress)
         .load(setup);
 
@@ -27,5 +28,5 @@ function loadCharacters() {
 
 }
 init();
-loadCharacters();
+loadAssets();
 

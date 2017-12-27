@@ -1,6 +1,6 @@
 "use strict";
 
-/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics, PIXIText */
+/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics, BitmapText */
 /* exported setup */
 var dungeon = void 0,
     explorer = void 0,
@@ -12,7 +12,7 @@ function setup(loader, resources) {
     "use strict";
     // Add sprites from textures
 
-    var spritesheet = resources["assets/treasureHunter.json"].textures;
+    var spritesheet = resources["assets/spritesheets/treasureHunter.json"].textures;
     dungeon = new Sprite(spritesheet["dungeon.png"]);
     explorer = new Sprite(spritesheet["explorer.png"]);
     treasure = new Sprite(spritesheet["treasure.png"]);
@@ -111,9 +111,11 @@ function drawGraphics() {
 function displayTitle() {
     "use strict";
 
-    title = new PIXIText("Dungeon Hunter", {
-        font: "48px Impact",
-        fill: "red"
+    title = new BitmapText("DUNGEON HUNTER", {
+        font: {
+            name: "vcr-osd-mono",
+            size: 100
+        }
     });
 
     title.x = renderer.view.width / 2 - title.width / 2;

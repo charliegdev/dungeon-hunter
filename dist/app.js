@@ -1,6 +1,6 @@
 "use strict";
 
-/* global setup */
+/* global setup, Container */
 var renderer = void 0,
     stage = void 0;
 function init() {
@@ -18,10 +18,10 @@ function init() {
     });
 }
 
-function loadCharacters() {
+function loadAssets() {
     "use strict";
 
-    PIXI.loader.add("assets/treasureHunter.json").on("progress", logProgress).load(setup);
+    PIXI.loader.add("assets/spritesheets/treasureHunter.json").add("assets/fonts/vcr-osd-mono.fnt").on("progress", logProgress).load(setup);
 
     function logProgress(loader, resource) {
         console.log("Process: " + Math.round(loader.progress) + "%");
@@ -29,4 +29,4 @@ function loadCharacters() {
     }
 }
 init();
-loadCharacters();
+loadAssets();

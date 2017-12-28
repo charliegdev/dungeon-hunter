@@ -1,10 +1,10 @@
-/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics */
+/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics, BitmapText */
 /* exported setup */
-let dungeon, explorer, treasure, door;
+let dungeon, explorer, treasure, door, line, title;
 function setup(loader, resources) {
     "use strict";
     // Add sprites from textures
-    const spritesheet = resources["assets/treasureHunter.json"].textures;
+    const spritesheet = resources["assets/spritesheets/treasureHunter.json"].textures;
     dungeon = new Sprite(spritesheet["dungeon.png"]);
     explorer = new Sprite(spritesheet["explorer.png"]);
     treasure = new Sprite(spritesheet["treasure.png"]);
@@ -36,6 +36,7 @@ function setup(loader, resources) {
     explorer.vy = 0;
 
     drawGraphics();
+    displayTitle();
 
     let state = play;
     gameLoop();
@@ -48,6 +49,17 @@ function setup(loader, resources) {
 }
 function play() {
     "use strict";
+    line.angleA += 0.02;
+    const rotatingA = rotateAroundPoint(64, 64, 20, 20, line.angleA);
+
+    line.angleB -= 0.03;
+    const rotatingB = rotateAroundPoint(192, 208, 20, 20, line.angleB);
+
+    line.clear();
+
+    line.lineStyle(4, 0x000000, 1);
+    line.moveTo(rotatingA.x, rotatingA.y);
+    line.lineTo(rotatingB.x, rotatingB.y);
 
     let collision = contain(explorer, {
         x: 0,
@@ -78,10 +90,31 @@ function getRandomInt(min, max) {
 
 function drawGraphics() {
     "use strict";
-    const shape = new Graphics();
-    shape.beginFill(0x00FF00);
-    shape.lineStyle(3, 0x0000FF, 0.8);
-    shape.drawCircle(100, 100, 25);
-    shape.endFill();
-    stage.addChild(shape);
+    line = new Graphics();
+    stage.addChild(line);
+
+    line.angleA = 0;
+    line.angleB = 0;
+}
+
+function displayTitle() {
+    "use strict";
+    title = new BitmapText("DUNGEON HUNTER", {
+        font: {
+            name: "vcr-osd-mono",
+            size: 100
+        }
+    });
+
+    title.anchor = new Point(0.5, 0.5);
+    title.x = renderer.view.width / 2;
+    title.y = renderer.view.height / 2;
+    
+    stage.addChild(title);
+}
+
+function rotateAroundPoint(pointX, pointY, distanceX, distanceY, angle) {
+    "use strict";
+    const debugPoint = new Point(pointX + Math.cos(angle) * distanceX, pointY + Math.sin(angle) * distanceY);
+    return debugPoint;
 }

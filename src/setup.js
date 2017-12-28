@@ -106,8 +106,9 @@ function displayTitle() {
         }
     });
 
-    title.x = renderer.view.width / 2 - title.width / 2;
-    title.y = renderer.view.height / 2 - title.height / 2;
+    title.anchor = new Point(0.5, 0.5);
+    title.x = renderer.view.width / 2;
+    title.y = renderer.view.height / 2;
     
     stage.addChild(title);
 }

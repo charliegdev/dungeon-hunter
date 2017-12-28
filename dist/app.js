@@ -6,16 +6,11 @@ var renderer = void 0,
 function init() {
     "use strict";
 
-    renderer = PIXI.autoDetectRenderer(1024, 768);
+    renderer = PIXI.autoDetectRenderer(512, 512);
     document.body.appendChild(renderer.view);
 
     stage = new Container();
     renderer.render(stage);
-
-    scaleToWindow(renderer.view);
-    window.addEventListener("resize", function (event) {
-        scaleToWindow(renderer.view);
-    });
 }
 
 function loadAssets() {

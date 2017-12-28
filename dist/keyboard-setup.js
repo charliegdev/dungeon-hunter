@@ -1,6 +1,6 @@
 "use strict";
 
-/* global keyboard, explorer, explorerSpeed */
+/* global keyboard, explorer */
 /* exported setupKeyboard */
 function setupKeyboard() {
     "use strict";
@@ -9,7 +9,8 @@ function setupKeyboard() {
     var left = keyboard(37),
         up = keyboard(38),
         right = keyboard(39),
-        down = keyboard(40);
+        down = keyboard(40),
+        explorerSpeed = 2;
 
     left.press = function () {
         explorer.vx -= explorerSpeed;

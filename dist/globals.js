@@ -1,6 +1,7 @@
 "use strict";
 
-/* exported Container, Sprite, Point, Graphics, explorerSpeed, PIXIText, BitmapText */
+/* globals Bump */
+/* exported Container, Sprite, Point, Graphics, explorerSpeed, PIXIText, BitmapText, cd */
 // Setup APIs
 var Container = PIXI.Container;
 var Sprite = PIXI.Sprite;
@@ -10,3 +11,6 @@ var PIXIText = PIXI.Text; // Text seems to be another predefined variable. So ca
 var BitmapText = PIXI.extras.BitmapText;
 // global constants
 var explorerSpeed = 2;
+
+// Collision detection
+var cd = new Bump(PIXI);

@@ -1,13 +1,11 @@
 "use strict";
 
-/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Graphics, BitmapText */
+/* global stage, setupKeyboard, renderer, contain, Sprite, Point */
 /* exported setup */
 var dungeon = void 0,
     explorer = void 0,
     treasure = void 0,
-    door = void 0,
-    line = void 0,
-    title = void 0;
+    door = void 0;
 function setup(loader, resources) {
     "use strict";
     // Add sprites from textures
@@ -43,9 +41,6 @@ function setup(loader, resources) {
     explorer.vx = 0;
     explorer.vy = 0;
 
-    drawGraphics();
-    displayTitle();
-
     var state = play;
     gameLoop();
 
@@ -57,18 +52,6 @@ function setup(loader, resources) {
 }
 function play() {
     "use strict";
-
-    line.angleA += 0.02;
-    var rotatingA = rotateAroundPoint(64, 64, 20, 20, line.angleA);
-
-    line.angleB -= 0.03;
-    var rotatingB = rotateAroundPoint(192, 208, 20, 20, line.angleB);
-
-    line.clear();
-
-    line.lineStyle(4, 0x000000, 1);
-    line.moveTo(rotatingA.x, rotatingA.y);
-    line.lineTo(rotatingB.x, rotatingB.y);
 
     var collision = contain(explorer, {
         x: 0,
@@ -96,38 +79,4 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
-
-function drawGraphics() {
-    "use strict";
-
-    line = new Graphics();
-    stage.addChild(line);
-
-    line.angleA = 0;
-    line.angleB = 0;
-}
-
-function displayTitle() {
-    "use strict";
-
-    title = new BitmapText("DUNGEON HUNTER", {
-        font: {
-            name: "vcr-osd-mono",
-            size: 100
-        }
-    });
-
-    title.anchor = new Point(0.5, 0.5);
-    title.x = renderer.view.width / 2;
-    title.y = renderer.view.height / 2;
-
-    stage.addChild(title);
-}
-
-function rotateAroundPoint(pointX, pointY, distanceX, distanceY, angle) {
-    "use strict";
-
-    var debugPoint = new Point(pointX + Math.cos(angle) * distanceX, pointY + Math.sin(angle) * distanceY);
-    return debugPoint;
 }

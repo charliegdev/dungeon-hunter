@@ -1,5 +1,7 @@
-/* global stage, setupKeyboard, renderer, contain, Sprite, Point, Container, Graphics, PIXIText */
-/* exported setup */
+/* globals contain */
+import { Container, Sprite, Point, Graphics, PIXIText } from './globals.js';
+import { stage, renderer } from './app.js';
+import { setupKeyboard } from './keyboard-setup.js';
 let dungeon, explorer, treasure, door, gameScene, gameOverScene;
 
 function setup(loader, resources) {
@@ -118,3 +120,5 @@ function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
+
+export { setup, explorer };

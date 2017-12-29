@@ -1,5 +1,5 @@
-/* global keyboard, explorer */
-/* exported setupKeyboard */
+/* globals keyboard */
+import { explorer } from 'setup';
 function setupKeyboard() {
     "use strict";
     // Add keyboard control
@@ -41,3 +41,6 @@ function setupKeyboard() {
         explorer.vy -= explorerSpeed;
     };
 }
+
+export { setupKeyboard };
+

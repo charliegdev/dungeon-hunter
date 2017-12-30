@@ -1,9 +1,10 @@
-/* globals contain */
 import { Container, Sprite, Point, Graphics, PIXIText } from 'globals';
 import { stage, renderer } from 'app';
 import { setupKeyboard } from 'keyboard-setup';
-import { play } from 'play';
-let dungeon, explorer, treasure, door, gameScene, gameOverScene;
+import { play, isGameOver } from 'play';
+import { end } from 'end';
+let dungeon, explorer, treasure, door, gameScene, gameOverScene, healthBar, message;
+const blobs = [];
 
 function setup(loader, resources) {
     "use strict";
@@ -36,12 +37,11 @@ function setup(loader, resources) {
     explorer.vx = 0;
     explorer.vy = 0;
 
-    const blobs = [],
-        numberOfBlobs = 6,
+    let numberOfBlobs = 6,
         spacing = 48,
         xOffset = 150,
-        blobSpeed = 2;
-    let blobDirection = 1;
+        blobSpeed = 2,
+        blobDirection = 1;
 
     for (let i = 0; i < numberOfBlobs; i++) {
         const blob = new Sprite(spritesheet["blob.png"]);
@@ -54,7 +54,7 @@ function setup(loader, resources) {
     }
 
     // Add health bar
-    const healthBar = new Container();
+    healthBar = new Container();
     healthBar.position = new Point(stage.width - 170, 4);
     gameScene.addChild(healthBar);
 
@@ -74,19 +74,24 @@ function setup(loader, resources) {
     healthBar.outer = outerBar;
 
     // Add game over message
-    const message = new PIXIText("Game Over!", {
+    message = new PIXIText("Game Over!", {
         fontFamily: "Futura",
-        fontSize: "48px"
+        fontSize: "48px",
+        fill: "red"
     });
     message.position = new Point(120, stage.height / 2 - 32);
     gameOverScene.addChild(message);
 
     setupKeyboard();
+
     let state = play;
     gameLoop();
 
     function gameLoop() {
         requestAnimationFrame(gameLoop);
+        if (isGameOver) {
+            state = end;
+        }
         state();
         renderer.render(stage);
     }
@@ -99,4 +104,4 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-export { setup, explorer };
+export { setup, explorer, blobs, healthBar, treasure, door, message, gameScene, gameOverScene };

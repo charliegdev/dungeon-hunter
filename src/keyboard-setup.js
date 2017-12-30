@@ -1,12 +1,13 @@
-/* global keyboard, explorer, explorerSpeed */
-/* exported setupKeyboard */
+/* globals keyboard */
+import { explorer } from 'setup';
 function setupKeyboard() {
     "use strict";
     // Add keyboard control
     const left = keyboard(37),
         up = keyboard(38),
         right = keyboard(39),
-        down = keyboard(40);
+        down = keyboard(40),
+        explorerSpeed = 2;
 
     left.press = function() {
         explorer.vx -= explorerSpeed;
@@ -40,3 +41,6 @@ function setupKeyboard() {
         explorer.vy -= explorerSpeed;
     };
 }
+
+export { setupKeyboard };
+

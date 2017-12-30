@@ -1,11 +1,11 @@
 {
   "name": "dungeon-hunter",
   "version": "1.0.0",
-  "description": "A 2D pixel art game made using PixiJS. This game is implemented mostly following Rex van der Spuy's [Learn Pixi.js book](https://www.amazon.ca/Learn-Pixi-js-Rex-van-Spuy-ebook/dp/B01HXEJ4PC/ref=sr_1_1?ie=UTF8&qid=1513793710&sr=8-1&keywords=learn+pixi).",
+  "description": "A 2D pixel art game made using PixiJS. This game is implemented mostly following Rex van der Spuy's 'Learn Pixi.js book'",
   "main": "script/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/babel src -d dist",
+    "build": "webpack",
     "host": "npm run build && http-server"
   },
   "repository": {
@@ -21,7 +21,12 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-latest": "^6.24.1"
+    "babel-preset-latest": "^6.24.1",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {
+    "pixi.js": "^4.6.2"
   }
 }

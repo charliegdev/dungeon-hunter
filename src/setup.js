@@ -1,7 +1,8 @@
 /* globals contain */
-import { Container, Sprite, Point, Graphics, PIXIText } from './globals.js';
-import { stage, renderer } from './app.js';
-import { setupKeyboard } from './keyboard-setup.js';
+import { Container, Sprite, Point, Graphics, PIXIText } from 'globals';
+import { stage, renderer } from 'app';
+import { setupKeyboard } from 'keyboard-setup';
+import { play } from 'play';
 let dungeon, explorer, treasure, door, gameScene, gameOverScene;
 
 function setup(loader, resources) {
@@ -89,29 +90,6 @@ function setup(loader, resources) {
         state();
         renderer.render(stage);
     }
-}
-
-function play() {
-    "use strict";
-
-    let collision = contain(explorer, {
-        x: 0,
-        y: 0,
-        width: renderer.view.width,
-        height: renderer.view.height
-    });
-    if (collision) {
-        if (collision.has("left") || collision.has("right")) {
-            explorer.vx = 0;
-        }
-        if (collision.has("up") || collision.has("down")) {
-            explorer.vy = 0;
-        }
-        return;
-    }
-
-    explorer.x += explorer.vx;
-    explorer.y += explorer.vy;
 }
 
 function getRandomInt(min, max) {

@@ -1,5 +1,10 @@
-/* global setup, Container */
+import { Container } from 'globals';
+import { setup } from 'setup';
+
 let renderer, stage;
+console.log("test1");
+
+
 function init() {
     "use strict";
     renderer = PIXI.autoDetectRenderer(512, 512);
@@ -24,3 +29,4 @@ function loadAssets() {
 init();
 loadAssets();
 
+export { renderer, stage };

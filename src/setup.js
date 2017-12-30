@@ -1,4 +1,4 @@
-import { Container, Sprite, Point, Graphics, PIXIText } from 'globals';
+import { Container, Sprite, Point, Graphics, PIXIText, AnimatedSprite, spriteUtils } from 'globals';
 import { stage, renderer } from 'app';
 import { setupKeyboard } from 'keyboard-setup';
 import { play, isGameOver } from 'play';
@@ -24,6 +24,8 @@ function setup(loader, resources) {
     explorer = new Sprite(spritesheet["explorer.png"]);
     treasure = new Sprite(spritesheet["treasure.png"]);
     door = new Sprite(spritesheet["door.png"]);
+
+    const pixieTexture = resources["assets/spritesheets/pixieFrames.png"];
 
     gameScene.addChild(dungeon);
     gameScene.addChild(explorer);
@@ -84,6 +86,8 @@ function setup(loader, resources) {
 
     setupKeyboard();
 
+    setupAnimatedSprites(pixieTexture);
+
     let state = play;
     gameLoop();
 
@@ -102,6 +106,21 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function setupAnimatedSprites(texture) {
+    "use strict";
+    const frames = spriteUtils.filmstrip("assets/spritesheets/pixieFrames.png", 48, 32);
+    console.log(frames);
+    const pixie = new AnimatedSprite(frames);
+    gameScene.addChild(pixie);
+
+    pixie.anchor = new Point(0.5, 0.5);
+    pixie.position = new Point(stage.width / 2, stage.height / 2);
+    pixie.scale = new Point(2, 2);
+
+    pixie.animationSpeed = 0.2;
+    pixie.play();
 }
 
 export { setup, explorer, blobs, healthBar, treasure, door, message, gameScene, gameOverScene };

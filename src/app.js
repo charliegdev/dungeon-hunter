@@ -17,7 +17,7 @@ function init() {
 function loadAssets() {
     "use strict";
     PIXI.loader.add("assets/spritesheets/treasureHunter.json")
-        .add("assets/spritesheets/pixieFrames.png")
+        .add("../assets/spritesheets/adventuress.png")
         .add("assets/fonts/vcr-osd-mono.fnt")
         .on("progress", logProgress)
         .load(setup);

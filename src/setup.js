@@ -1,9 +1,9 @@
-import { Container, Sprite, Point, Graphics, PIXIText, AnimatedSprite, spriteUtils } from 'globals';
+import { Container, Sprite, Point, Graphics, PIXIText, spriteUtils } from 'globals';
 import { stage, renderer } from 'app';
 import { setupKeyboard } from 'keyboard-setup';
 import { play, isGameOver } from 'play';
 import { end } from 'end';
-let dungeon, explorer, treasure, door, gameScene, gameOverScene, healthBar, message;
+let dungeon, adventuress, treasure, door, gameScene, gameOverScene, healthBar, message;
 const blobs = [];
 
 function setup(loader, resources) {
@@ -21,23 +21,23 @@ function setup(loader, resources) {
     // Add sprites     
     const spritesheet = resources["assets/spritesheets/treasureHunter.json"].textures;
     dungeon = new Sprite(spritesheet["dungeon.png"]);
-    explorer = new Sprite(spritesheet["explorer.png"]);
     treasure = new Sprite(spritesheet["treasure.png"]);
     door = new Sprite(spritesheet["door.png"]);
 
-    const pixieTexture = resources["assets/spritesheets/pixieFrames.png"];
+    const adventuressTexture = resources["../assets/spritesheets/adventuress.png"];
 
     gameScene.addChild(dungeon);
-    gameScene.addChild(explorer);
     gameScene.addChild(treasure);
+    // Add adventuress
+    setupAnimatedSprites(adventuressTexture);
     gameScene.addChild(door);
 
-    explorer.position = new Point(68, stage.height / 2 - explorer.height / 2);
+    adventuress.position = new Point(68, stage.height / 2 - adventuress.height / 2);
     treasure.position = new Point(stage.width - treasure.width - 48, stage.height / 2 - treasure.height / 2);
     door.position = new Point(32, 0);
 
-    explorer.vx = 0;
-    explorer.vy = 0;
+    adventuress.vx = 0;
+    adventuress.vy = 0;
 
     let numberOfBlobs = 6,
         spacing = 48,
@@ -86,7 +86,6 @@ function setup(loader, resources) {
 
     setupKeyboard();
 
-    setupAnimatedSprites(pixieTexture);
 
     let state = play;
     gameLoop();
@@ -110,17 +109,23 @@ function getRandomInt(min, max) {
 
 function setupAnimatedSprites(texture) {
     "use strict";
-    const frames = spriteUtils.filmstrip("assets/spritesheets/pixieFrames.png", 48, 32);
-    console.log(frames);
-    const pixie = new AnimatedSprite(frames);
-    gameScene.addChild(pixie);
+    const frames = spriteUtils.filmstrip("../assets/spritesheets/adventuress.png", 32, 32);
+    adventuress = spriteUtils.sprite(frames);
 
-    pixie.anchor = new Point(0.5, 0.5);
-    pixie.position = new Point(stage.width / 2, stage.height / 2);
-    pixie.scale = new Point(2, 2);
+    adventuress.states = {
+        down: 0,
+        left: 3,
+        right: 6,
+        up: 9,
 
-    pixie.animationSpeed = 0.2;
-    pixie.play();
+        walkDown: [0, 2],
+        walkLeft: [3, 5],
+        walkRight: [6, 8],
+        walkUp: [9, 11]
+    };
+
+    adventuress.show(adventuress.states.right);
+    gameScene.addChild(adventuress);
 }
 
-export { setup, explorer, blobs, healthBar, treasure, door, message, gameScene, gameOverScene };
+export { setup, adventuress, blobs, healthBar, treasure, door, message, gameScene, gameOverScene };

@@ -1,5 +1,6 @@
 /* globals keyboard */
-import { explorer } from 'setup';
+import { adventuress } from 'setup';
+
 function setupKeyboard() {
     "use strict";
     // Add keyboard control
@@ -7,40 +8,59 @@ function setupKeyboard() {
         up = keyboard(38),
         right = keyboard(39),
         down = keyboard(40),
-        explorerSpeed = 2;
+        adventuressSpeed = 2;
 
-    left.press = function() {
-        explorer.vx -= explorerSpeed;
+    left.press = function () {
+        adventuress.playAnimation(adventuress.states.walkLeft);
+        adventuress.vx = -3;
+        adventuress.vy = 0;
     };
 
-    left.release = function() {
-        explorer.vx += explorerSpeed;
+    left.release = function () {
+        if (!right.isDown && adventuress.vy === 0) {
+            adventuress.vx = 0;
+            adventuress.show(adventuress.states.left);
+        }
     };
 
-    right.press = function() {
-        explorer.vx += explorerSpeed;
+    right.press = function () {
+        adventuress.playAnimation(adventuress.states.walkRight);
+        adventuress.vx = 3;
+        adventuress.vy = 0;
     };
 
-    right.release = function() {
-        explorer.vx -= explorerSpeed;
+    right.release = function () {
+        if (!left.isDown && adventuress.vy === 0) {
+            adventuress.vx = 0;
+            adventuress.show(adventuress.states.right);
+        }
     };
 
-    up.press = function() {
-        explorer.vy -= explorerSpeed;
+    up.press = function () {
+        adventuress.playAnimation(adventuress.states.walkUp);
+        adventuress.vy = -3;
+        adventuress.vx = 0;
     };
 
-    up.release = function() {
-        explorer.vy += explorerSpeed;
+    up.release = function () {
+        if (!down.isDown && adventuress.vx === 0) {
+            adventuress.vy = 0;
+            adventuress.show(adventuress.states.up);
+        }
     };
 
-    down.press = function() {
-        explorer.vy += explorerSpeed;
+    down.press = function () {
+        adventuress.playAnimation(adventuress.states.walkDown);
+        adventuress.vy = 3;
+        adventuress.vx = 0;
     };
 
-    down.release = function() {
-        explorer.vy -= explorerSpeed;
+    down.release = function () {
+        if (!up.isDown && adventuress.vx === 0) {
+            adventuress.vy = 0;
+            adventuress.show(adventuress.states.down);
+        }
     };
 }
 
 export { setupKeyboard };
-
